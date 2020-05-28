@@ -27,7 +27,7 @@ const Users = () => (
 
       <ul>
         {usersList.map(({ id, name }) => (
-          <li key={id}>
+          <li key={`usersList-${id}`}>
             <Link href="/users/[id]" as={'/users/' + id}>
               <a>{name}</a>
             </Link>

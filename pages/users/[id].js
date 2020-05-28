@@ -4,6 +4,21 @@ import Header from '../../components/Header';
 import { getUserById } from '../../db';
 
 const User = (props) => {
+  if (typeof window !== 'undefined' && props.user) {
+    const prevFiveLastUsersVisited = JSON.parse(
+      // This is the same as:
+      // window.localStorage.lastUsersVisited
+      window.localStorage.getItem('lastUsersVisited'),
+    ).slice(0, 4);
+
+    // This is the same as:
+    // window.localStorage.lastUsersVisited = JSON.stringify([...prevLastUsersVisited, props.user.id])
+    window.localStorage.setItem(
+      'lastUsersVisited',
+      JSON.stringify([props.user.id, ...prevFiveLastUsersVisited]),
+    );
+  }
+
   if (!props.user) return <div>User not found!</div>;
 
   return (
@@ -50,8 +65,6 @@ export default User;
 // you can write code here that is "secret" - eg. passwords,
 // database connection information, etc.
 export function getServerSideProps(context) {
-  console.log('server-side context', context.params.id);
-
   const user = getUserById(context.params.id);
 
   if (user === undefined) {
