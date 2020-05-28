@@ -1,10 +1,17 @@
 import React from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
+import cookies from 'js-cookie';
 
 function login() {
-  const newUser = 'Karl';
-  document.cookie = `user=${newUser}`;
+  const user = 'Karl';
+
+  // You can also do this with vanilla
+  // JavaScript using the complicated
+  // document.cookie API:
+  //
+  // document.cookie = `user=${user}`;
+  cookies.set('user', user);
 
   // Below we refresh the page using
   // window.location.reload() in order
@@ -23,7 +30,12 @@ function login() {
 }
 
 function logout() {
-  document.cookie = 'user= ; expires = Thu, 01 Jan 1970 00:00:00 GMT';
+  // You can also do this with vanilla
+  // JavaScript using the complicated
+  // document.cookie API:
+  //
+  // document.cookie = 'user= ; expires = Thu, 01 Jan 1970 00:00:00 GMT';
+  cookies.remove('user');
 
   // Below we refresh the page using
   // window.location.reload() in order
@@ -55,7 +67,22 @@ export default function Header() {
     ? JSON.parse(window.localStorage.getItem('lastUsersVisited'))
     : [];
 
-  const user = inTheBrowser ? document.cookie.match(/user=[^;]+/) : null;
+  // You can also do this with vanilla
+  // JavaScript using the complicated
+  // document.cookie API:
+  //
+  // document.cookie.match(/user=[^;]+/)
+  const user = cookies.get('user');
+
+  let loginLogoutButton = null;
+
+  if (inTheBrowser) {
+    if (user) {
+      loginLogoutButton = <button onClick={logout}>Logout</button>;
+    } else {
+      loginLogoutButton = <button onClick={login}>Login</button>;
+    }
+  }
 
   return (
     <div>
@@ -76,15 +103,7 @@ export default function Header() {
 
         {/* ["3","2","1","3"] */}
         <div>
-          <div>
-            {inTheBrowser ? (
-              user === null ? (
-                <button onClick={login}>Login</button>
-              ) : (
-                <button onClick={logout}>Logout</button>
-              )
-            ) : null}
-          </div>
+          <div>{loginLogoutButton}</div>
 
           {lastUsersVisited.map((userId, index) => {
             return (

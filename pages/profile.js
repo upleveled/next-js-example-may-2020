@@ -1,5 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
+import nextCookies from 'next-cookies';
 import Header from '../components/Header';
 
 const Profile = (props) => {
@@ -12,7 +13,7 @@ const Profile = (props) => {
       <Header />
 
       <main>
-        <h1>{props.user === null ? 'Please login' : props.user}</h1>
+        <h1>{props.user || 'Please login'}</h1>
       </main>
 
       <style jsx global>{`
@@ -39,20 +40,24 @@ export default Profile;
 // you can write code here that is "secret" - eg. passwords,
 // database connection information, etc.
 export function getServerSideProps(context) {
-  const userMatches = context.req.headers.cookie.match(/user=([^;]+)/);
+  // You can also do this with vanilla
+  // JavaScript using the complicated
+  // document.cookie API:
+  //
+  // const userMatches = context.req.headers.cookie.match(/user=([^;]+)/);
+  // let user = null;
+  // if (userMatches && userMatches.length > 0) { user = userMatches[1]; }
 
-  let user = null;
-  if (userMatches && userMatches.length > 0) {
-    user = userMatches[1];
-    console.log('user', user);
-  }
+  // The line below is the same as writing this line:
+  // const user = nextCookies(context).user;
+  const { user } = nextCookies(context);
 
   return {
     // will be passed to the page component as props
     props: {
       // This is a shorthand for the line below
       // user,
-      user: user,
+      ...(user ? { user: user } : undefined),
     },
   };
 }
