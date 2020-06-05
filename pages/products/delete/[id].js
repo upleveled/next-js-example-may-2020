@@ -11,7 +11,7 @@ const Products = (props) => (
     <Header />
 
     <main>
-      <h1>Product #{props.product.id} is deleted!</h1>
+      <h1>Product #{props.id} is deleted!</h1>
     </main>
 
     <style jsx>{`
@@ -66,6 +66,7 @@ export async function getServerSideProps(context) {
     props: {
       // product: product,
       product,
+      id,
     },
   };
 }

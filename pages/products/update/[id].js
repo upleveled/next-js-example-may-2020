@@ -12,8 +12,7 @@ const Products = (props) => (
 
     <main>
       <h1>
-        Product #{props.product.id} is updated with the name{' '}
-        {props.product.name}!
+        Product #{props.id} is updated with the name "{props.name}"!
       </h1>
     </main>
 
@@ -70,6 +69,8 @@ export async function getServerSideProps(context) {
     props: {
       // product: product,
       product,
+      id,
+      name,
     },
   };
 }
