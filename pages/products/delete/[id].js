@@ -2,7 +2,13 @@ import React from 'react';
 import Head from 'next/head';
 import Header from '../../../components/Header';
 
-const Products = (props) => (
+/**
+ * @typedef {{
+ *   id: string,
+ * }} Props
+ */
+
+const Products = (/** @type {Props} */ props) => (
   <div className="container">
     <Head>
       <title>Product Deleted</title>
@@ -60,12 +66,11 @@ export async function getServerSideProps(context) {
   // import { deleteProductById } from '../../../db.js';
   const { deleteProductById } = await import('../../../db.js');
 
-  const product = await deleteProductById(id);
+  await deleteProductById(id);
 
   return {
     props: {
-      // product: product,
-      product,
+      // id: id,
       id,
     },
   };

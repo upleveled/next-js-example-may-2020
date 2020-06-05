@@ -2,7 +2,20 @@ import React from 'react';
 import Head from 'next/head';
 import Header from '../../components/Header';
 
-const Products = (props) => (
+/**
+ * @typedef {{
+ *   id: string,
+ *   name: string,
+ * }} Product
+ */
+
+/**
+ * @typedef {{
+ *   products: Product[]
+ * }} Props
+ */
+
+const Products = (/** @type {Props} */ props) => (
   <div className="container">
     <Head>
       <title>Products</title>

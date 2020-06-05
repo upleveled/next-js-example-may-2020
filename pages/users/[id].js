@@ -4,15 +4,16 @@ import Header from '../../components/Header';
 import { getUserById } from '../../db';
 
 /**
- * @param {{
+ * @typedef {{
  *   user: {
  *     id: string,
  *     name: string,
  *     role: string,
  *   }
- * }} props Props from getServerSideProps
+ * }} Props
  */
-const User = (props) => {
+
+const User = (/** @type {Props} */ props) => {
   if (typeof window !== 'undefined' && props.user) {
     const prevFiveLastUsersVisited = JSON.parse(
       // This is the same as:

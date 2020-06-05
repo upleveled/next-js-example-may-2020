@@ -4,9 +4,12 @@ import nextCookies from 'next-cookies';
 import Header from '../components/Header';
 
 /**
- * @param {{user: string}} props
+ * @typedef {{
+ *   user: string,
+ * }} Props
  */
-const Profile = (props) => {
+
+const Profile = (/** @type {Props} */ props) => {
   return (
     <div className="container">
       <Head>

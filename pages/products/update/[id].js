@@ -2,7 +2,14 @@ import React from 'react';
 import Head from 'next/head';
 import Header from '../../../components/Header';
 
-const Products = (props) => (
+/**
+ * @typedef {{
+ *   id: string,
+ *   name: string,
+ * }} Props
+ */
+
+const Products = (/** @type {Props} */ props) => (
   <div className="container">
     <Head>
       <title>Product Updated</title>
@@ -58,18 +65,18 @@ export async function getServerSideProps(context) {
   const id = context.params.id;
   const name = context.query.name;
 
-  // // This following dynamic import is the equivalent
-  // // to doing the following with static imports
-  // // import { updateProductNameById } from '../../../db.js';
+  // This following dynamic import is the equivalent
+  // to doing the following with static imports
+  // import { updateProductNameById } from '../../../db.js';
   const { updateProductNameById } = await import('../../../db.js');
 
-  const product = await updateProductNameById(id, name);
+  await updateProductNameById(id, name);
 
   return {
     props: {
-      // product: product,
-      product,
+      // id: id,
       id,
+      // name: name,
       name,
     },
   };
