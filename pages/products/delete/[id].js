@@ -1,30 +1,17 @@
 import React from 'react';
 import Head from 'next/head';
-import Header from '../components/Header';
-import { getProducts } from '../db.js';
+import Header from '../../../components/Header';
 
-const productList = getProducts();
-
-const Products = () => (
+const Products = (props) => (
   <div className="container">
     <Head>
-      <title>Products</title>
+      <title>Product Deleted</title>
     </Head>
 
     <Header />
 
     <main>
-      <h1>Products</h1>
-
-      <ul>
-        {productList.map((product) => {
-          return (
-            <li key={product.id}>
-              {product.id} {product.name}
-            </li>
-          );
-        })}
-      </ul>
+      <h1>Product #{props.product.id} is deleted!</h1>
     </main>
 
     <style jsx>{`
@@ -64,3 +51,21 @@ const Products = () => (
 );
 
 export default Products;
+
+export async function getServerSideProps(context) {
+  const id = context.params.id;
+
+  // This following dynamic import is the equivalent
+  // to doing the following with static imports
+  // import { deleteProductById } from '../../../db.js';
+  const { deleteProductById } = await import('../../../db.js');
+
+  const product = await deleteProductById(id);
+
+  return {
+    props: {
+      // product: product,
+      product,
+    },
+  };
+}
