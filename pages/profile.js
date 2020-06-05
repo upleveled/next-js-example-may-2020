@@ -3,6 +3,9 @@ import Head from 'next/head';
 import nextCookies from 'next-cookies';
 import Header from '../components/Header';
 
+/**
+ * @param {{user: string}} props
+ */
 const Profile = (props) => {
   return (
     <div className="container">

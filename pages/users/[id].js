@@ -3,6 +3,15 @@ import Head from 'next/head';
 import Header from '../../components/Header';
 import { getUserById } from '../../db';
 
+/**
+ * @param {{
+ *   user: {
+ *     id: string,
+ *     name: string,
+ *     role: string,
+ *   }
+ * }} props Props from getServerSideProps
+ */
 const User = (props) => {
   if (typeof window !== 'undefined' && props.user) {
     const prevFiveLastUsersVisited = JSON.parse(
