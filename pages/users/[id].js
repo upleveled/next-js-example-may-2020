@@ -41,7 +41,7 @@ const User = (/** @type {Props} */ props) => {
       <Header />
 
       <main>
-        <h1>{props.user.name}</h1>
+        <h1>a</h1>
 
         <p>id: {props.user.id}</p>
 
