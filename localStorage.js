@@ -4,7 +4,7 @@ export function getParsedItemOrDefault(name, defaultValue) {
         // This is the same as:
         // window.localStorage.lastUsersVisited
         window.localStorage.getItem(name),
-      ) || 'randomtext' //defaultValue
+      ) || defaultValue
     : defaultValue;
 }
 
