@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "migrate": "dotenv ley"
+    "migrate": "dotenv ley",
+    "e2e": "cypress open",
+    "test": "jest"
   },
   "dependencies": {
     "dotenv": "^8.2.0",
@@ -18,5 +20,15 @@
     "postgres": "^1.0.2",
     "react": "16.13.1",
     "react-dom": "16.13.1"
+  },
+  "devDependencies": {
+    "babel-jest": "^26.0.1",
+    "cypress": "^4.7.0",
+    "jest": "^26.0.1"
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "<rootDir>/cypress"
+    ]
   }
 }

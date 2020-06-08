@@ -2,7 +2,6 @@ import React from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import Header from '../../components/Header';
-import { getUsers } from '../../db';
 
 // Beware: this will only work as long as you are importing from
 // another file and not doing some REAL database queries or anything
@@ -12,9 +11,8 @@ import { getUsers } from '../../db';
 // something like getServerSideProps or getStaticProps
 //
 // https://nextjs.org/docs/basic-features/data-fetching
-const usersList = getUsers();
 
-const Users = () => (
+const Users = (props) => (
   <div className="container">
     <Head>
       <title>Users</title>
@@ -26,7 +24,7 @@ const Users = () => (
       <h1>Users</h1>
 
       <ul>
-        {usersList.map(({ id, name }) => (
+        {props.usersList.map(({ id, name }) => (
           <li key={`usersList-${id}`}>
             <Link href="/users/[id]" as={'/users/' + id}>
               <a>{name}</a>
@@ -73,3 +71,14 @@ const Users = () => (
 );
 
 export default Users;
+
+export async function getServerSideProps() {
+  const { getUsers } = await import('../../db');
+  const usersList = await getUsers();
+
+  return {
+    props: {
+      usersList,
+    },
+  };
+}

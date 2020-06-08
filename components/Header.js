@@ -64,7 +64,7 @@ export default function Header() {
 
   const inTheBrowser = typeof window !== 'undefined';
   const lastUsersVisited = inTheBrowser
-    ? JSON.parse(window.localStorage.getItem('lastUsersVisited'))
+    ? JSON.parse(window.localStorage.getItem('lastUsersVisited')) || []
     : [];
 
   // You can also do this with vanilla
@@ -90,12 +90,17 @@ export default function Header() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="container">
+      <header className="container">
         <div>
           {linkList.map((link) => {
             return (
               <Link key={link.url} href={link.url}>
-                <a style={{ margin: '0 10px' }}>{link.name}</a>
+                <a
+                  style={{ margin: '0 10px' }}
+                  data-cy={'header-link-' + link.name.toLowerCase()}
+                >
+                  {link.name}
+                </a>
               </Link>
             );
           })}
@@ -115,7 +120,7 @@ export default function Header() {
             );
           })}
         </div>
-      </div>
+      </header>
 
       <style jsx>{`
         .container {

@@ -1,7 +1,7 @@
 import React from 'react';
 import Head from 'next/head';
 import Header from '../../components/Header';
-import { getUserById } from '../../db';
+import { getParsedItemOrDefault, setStringifiedItem } from '../../localStorage';
 
 /**
  * @typedef {{
@@ -15,18 +15,17 @@ import { getUserById } from '../../db';
 
 const User = (/** @type {Props} */ props) => {
   if (typeof window !== 'undefined' && props.user) {
-    const prevFiveLastUsersVisited = JSON.parse(
-      // This is the same as:
-      // window.localStorage.lastUsersVisited
-      window.localStorage.getItem('lastUsersVisited'),
+    const prevFiveLastUsersVisited = getParsedItemOrDefault(
+      'lastUsersVisited',
+      [],
     ).slice(0, 4);
 
     // This is the same as:
     // window.localStorage.lastUsersVisited = JSON.stringify([...prevLastUsersVisited, props.user.id])
-    window.localStorage.setItem(
-      'lastUsersVisited',
-      JSON.stringify([props.user.id, ...prevFiveLastUsersVisited]),
-    );
+    setStringifiedItem('lastUsersVisited', [
+      props.user.id,
+      ...prevFiveLastUsersVisited,
+    ]);
   }
 
   if (!props.user) return <div>User not found!</div>;
@@ -74,7 +73,8 @@ export default User;
 // getServerSideProps will ONLY be run on the server, so
 // you can write code here that is "secret" - eg. passwords,
 // database connection information, etc.
-export function getServerSideProps(context) {
+export async function getServerSideProps(context) {
+  const { getUserById } = await import('../../db');
   const user = getUserById(context.params.id);
 
   if (user === undefined) {
