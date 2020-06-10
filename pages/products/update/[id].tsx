@@ -1,15 +1,11 @@
 import React from 'react';
 import Head from 'next/head';
 import Header from '../../../components/Header';
+import { NextPageContext } from 'next';
 
-/**
- * @typedef {{
- *   id: string,
- *   name: string,
- * }} Props
- */
+type Props = { id: string; name: string };
 
-const Products = (/** @type {Props} */ props) => (
+const Products = (props: Props) => (
   <div className="container">
     <Head>
       <title>Product Updated</title>
@@ -61,7 +57,7 @@ const Products = (/** @type {Props} */ props) => (
 
 export default Products;
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps(context: NextPageContext) {
   const id = context.params.id;
   const name = context.query.name;
 
