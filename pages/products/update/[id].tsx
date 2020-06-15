@@ -1,7 +1,7 @@
 import React from 'react';
 import Head from 'next/head';
 import Header from '../../../components/Header';
-import { NextPageContext } from 'next';
+import { GetServerSidePropsContext } from 'next';
 
 type Props = { id: string; name: string };
 
@@ -57,8 +57,8 @@ const Products = (props: Props) => (
 
 export default Products;
 
-export async function getServerSideProps(context: NextPageContext) {
-  const id = context.params.id;
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const id = context.params?.id;
   const name = context.query.name;
 
   // This following dynamic import is the equivalent
