@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "heroku-postbuild": "migrate up && next build",
     "start": "next start",
     "migrate": "dotenv ley",
     "e2e": "cypress open",
