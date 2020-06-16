@@ -1,3 +1,4 @@
+require('./extractHerokuDatabaseEnvVars')();
 require('dotenv').config();
 
 const postgres = require('postgres');
