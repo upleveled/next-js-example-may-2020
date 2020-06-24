@@ -48,10 +48,44 @@ export async function deleteProductById(id) {
   return product;
 }
 
+// These are incompatible with the new
+// authentication users below
 export function getUsers() {
   return users;
 }
 
 export function getUserById(id) {
   return users.find((user) => user.id === id);
+}
+
+// These are incompatible with the old
+// users above
+export async function selectUserByUsername(username) {
+  return sql`
+    SELECT * FROM users WHERE username = ${username}
+  `;
+}
+
+export async function insertUser(username, passwordHash) {
+  return sql`
+    INSERT INTO users (username, password_hash) VALUES (${username}, ${passwordHash})
+  `;
+}
+
+export async function selectSessionByToken(token) {
+  return sql`
+    SELECT * FROM sessions WHERE token = ${token}
+  `;
+}
+
+export async function insertSession(userId, token) {
+  return sql`
+    INSERT INTO sessions (user_id, token) VALUES (${userId}, ${token})
+  `;
+}
+
+export async function deleteSessionByToken(token) {
+  return sql`
+    DELETE FROM sessions WHERE token = ${token}
+  `;
 }
