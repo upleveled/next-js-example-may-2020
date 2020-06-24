@@ -1,5 +1,8 @@
 import React, { useState, FormEvent } from 'react';
+import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
+import Router from 'next/router';
+import nextCookies from 'next-cookies';
 import Header from '../components/Header';
 
 export default function Login() {
@@ -31,6 +34,10 @@ export default function Login() {
           setStatus('Failed logging in - check username and password');
         } else {
           setStatus('Logged in!!');
+          // Redirect to homepage after 2 seconds
+          setTimeout(() => {
+            Router.replace('/');
+          }, 2000);
         }
       })
       .catch(() => {
@@ -41,7 +48,7 @@ export default function Login() {
   return (
     <>
       <Head>
-        <title>About</title>
+        <title>Login</title>
       </Head>
 
       <Header />
@@ -63,4 +70,17 @@ export default function Login() {
       {status}
     </>
   );
+}
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  // Redirect to homepage right away if logged in already
+  if (nextCookies(context).token) {
+    context.res.setHeader('location', '/');
+    context.res.statusCode = 302;
+    context.res.end();
+  }
+
+  return {
+    props: {},
+  };
 }

@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Head from 'next/head';
-import nextCookies from 'next-cookies';
 import Header from '../components/Header';
 import { GetServerSidePropsContext } from 'next';
 
@@ -17,12 +16,21 @@ export default function Logout() {
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  // TODO: best practice would be to also
-  // delete the cookie using an API route
-  // such as /pages/api/logout.ts
+  const { serialize } = await import('cookie');
+  const nextCookies = (await import('next-cookies')).default;
   const { deleteSessionByToken } = await import('../db');
+
   const { token } = nextCookies(context);
   await deleteSessionByToken(token);
+
+  // Remove the cookie
+  context.res.setHeader(
+    'Set-Cookie',
+    serialize('token', '', {
+      maxAge: -1,
+      path: '/',
+    }),
+  );
 
   return {
     props: {},
