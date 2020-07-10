@@ -75,9 +75,17 @@ export default function Login() {
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   // Redirect to homepage right away if logged in already
   if (nextCookies(context).token) {
-    context.res.setHeader('location', '/');
-    context.res.statusCode = 302;
-    context.res.end();
+    // This pattern, while working, will throw an error
+    // on Next.js 9.4.4:
+    //
+    // Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+    //
+    // Ref: https://github.com/vercel/next.js/discussions/10874#discussioncomment-35799
+    //
+    // In the future, getServerSideProps will probably
+    // have the ability to return redirects:
+    // https://github.com/vercel/next.js/discussions/14890
+    context.res.writeHead(307, { Location: '/' }).end();
   }
 
   return {
