@@ -1,6 +1,6 @@
 // Update product name
 exports.up = async (sql) => {
-  sql`
+  await sql`
     UPDATE products
       SET name = 'Handtuchz'
       WHERE name = 'Handtuch'
@@ -9,7 +9,7 @@ exports.up = async (sql) => {
 
 // Roll back product name update
 exports.down = async (sql) => {
-  sql`
+  await sql`
     UPDATE products
       SET name = 'Handtuch'
       WHERE name = 'Handtuchz'

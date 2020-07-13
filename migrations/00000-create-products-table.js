@@ -1,6 +1,6 @@
 // Create the products table
 exports.up = async (sql) => {
-  sql`
+  await sql`
     CREATE TABLE products(
       id SERIAL PRIMARY KEY,
       name VARCHAR(100) NOT NULL
@@ -10,7 +10,7 @@ exports.up = async (sql) => {
 
 // Delete the products table
 exports.down = async (sql) => {
-  sql`
+  await sql`
     DROP TABLE products
   `;
 };

@@ -1,6 +1,6 @@
 // Create the users table
 exports.up = async (sql) => {
-  sql`
+  await sql`
     CREATE TABLE users(
       id SERIAL PRIMARY KEY,
       username VARCHAR(100) NOT NULL,
@@ -11,7 +11,7 @@ exports.up = async (sql) => {
 
 // Delete the users table
 exports.down = async (sql) => {
-  sql`
+  await sql`
     DROP TABLE users
   `;
 };

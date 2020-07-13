@@ -1,6 +1,6 @@
 // Insert products into database
 exports.up = async (sql) => {
-  sql`
+  await sql`
     INSERT INTO products (name) VALUES
       ('Handtuch')
   `;
@@ -8,7 +8,7 @@ exports.up = async (sql) => {
 
 // Remove products from database
 exports.down = async (sql) => {
-  sql`
+  await sql`
     DELETE FROM products
       WHERE name IN ('Handtuch')
   `;
