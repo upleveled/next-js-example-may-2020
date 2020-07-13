@@ -1,57 +1,58 @@
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
-import cookies from 'js-cookie';
 
-function login() {
-  const user = 'Karl';
+// import cookies from 'js-cookie';
 
-  // You can also do this with vanilla
-  // JavaScript using the complicated
-  // document.cookie API:
-  //
-  // document.cookie = `user=${user}`;
-  cookies.set('user', user);
+// function login() {
+//   const user = 'Karl';
 
-  // Below we refresh the page using
-  // window.location.reload() in order
-  // to re-read the cookies everywhere
-  // that is using them.
-  //
-  // Another way of doing this would be to
-  // set a state variable in order to
-  // tell React to re-render this component
-  // (so that the Login button changes to a
-  // Logout button). However, this approach
-  // with a state variable doesn't work if
-  // you need to re-render more than just
-  // this component.
-  window.location.reload();
-}
+//   // You can also do this with vanilla
+//   // JavaScript using the complicated
+//   // document.cookie API:
+//   //
+//   // document.cookie = `user=${user}`;
+//   cookies.set('user', user);
 
-function logout() {
-  // You can also do this with vanilla
-  // JavaScript using the complicated
-  // document.cookie API:
-  //
-  // document.cookie = 'user= ; expires = Thu, 01 Jan 1970 00:00:00 GMT';
-  cookies.remove('user');
+//   // Below we refresh the page using
+//   // window.location.reload() in order
+//   // to re-read the cookies everywhere
+//   // that is using them.
+//   //
+//   // Another way of doing this would be to
+//   // set a state variable in order to
+//   // tell React to re-render this component
+//   // (so that the Login button changes to a
+//   // Logout button). However, this approach
+//   // with a state variable doesn't work if
+//   // you need to re-render more than just
+//   // this component.
+//   window.location.reload();
+// }
 
-  // Below we refresh the page using
-  // window.location.reload() in order
-  // to re-read the cookies everywhere
-  // that is using them.
-  //
-  // Another way of doing this would be to
-  // set a state variable in order to
-  // tell React to re-render this component
-  // (so that the Login button changes to a
-  // Logout button). However, this approach
-  // with a state variable doesn't work if
-  // you need to re-render more than just
-  // this component.
-  window.location.reload();
-}
+// function logout() {
+//   // You can also do this with vanilla
+//   // JavaScript using the complicated
+//   // document.cookie API:
+//   //
+//   // document.cookie = 'user= ; expires = Thu, 01 Jan 1970 00:00:00 GMT';
+//   cookies.remove('user');
+
+//   // Below we refresh the page using
+//   // window.location.reload() in order
+//   // to re-read the cookies everywhere
+//   // that is using them.
+//   //
+//   // Another way of doing this would be to
+//   // set a state variable in order to
+//   // tell React to re-render this component
+//   // (so that the Login button changes to a
+//   // Logout button). However, this approach
+//   // with a state variable doesn't work if
+//   // you need to re-render more than just
+//   // this component.
+//   window.location.reload();
+// }
 
 export default function Header() {
   const [user, setUser] = useState(null);
