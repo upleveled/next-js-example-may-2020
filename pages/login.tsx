@@ -73,19 +73,37 @@ export default function Login() {
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  // Redirect to homepage right away if logged in already
-  if (nextCookies(context).token) {
-    // This pattern, while working, will throw an error
-    // on Next.js 9.4.4:
-    //
-    // Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
-    //
-    // Ref: https://github.com/vercel/next.js/discussions/10874#discussioncomment-35799
-    //
-    // In the future, getServerSideProps will probably
-    // have the ability to return redirects:
-    // https://github.com/vercel/next.js/discussions/14890
-    context.res.writeHead(307, { Location: '/' }).end();
+  const token = nextCookies(context).token;
+
+  if (token) {
+    const { selectSessionByToken } = await import('../db');
+    const session = await selectSessionByToken(nextCookies(context).token);
+
+    if (session.length === 0) {
+      const { serialize } = await import('cookie');
+      // Remove invalid token in cookie
+      context.res.setHeader(
+        'Set-Cookie',
+        serialize('token', '', {
+          maxAge: -1,
+          path: '/',
+        }),
+      );
+    } else {
+      // Redirect to homepage right away if logged in already
+      //
+      // This pattern, while working, will throw an error
+      // on Next.js 9.4.4:
+      //
+      // Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+      //
+      // Ref: https://github.com/vercel/next.js/discussions/10874#discussioncomment-35799
+      //
+      // In the future, getServerSideProps will probably
+      // have the ability to return redirects:
+      // https://github.com/vercel/next.js/discussions/14890
+      context.res.writeHead(307, { Location: '/' }).end();
+    }
   }
 
   return {
