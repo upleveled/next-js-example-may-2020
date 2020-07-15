@@ -3,7 +3,7 @@ exports.up = async (sql) => {
   await sql`
     CREATE TABLE users(
       id SERIAL PRIMARY KEY,
-      username VARCHAR(100) NOT NULL,
+      username VARCHAR(100) UNIQUE NOT NULL,
       password_hash VARCHAR(100) NOT NULL
     )
   `;
