@@ -79,6 +79,8 @@ export async function selectSessionByToken(token) {
 }
 
 export async function insertSession(userId, token) {
+  // Remove expired sessions
+  await sql`DELETE FROM sessions WHERE expiry_timestamp < NOW()`;
   return sql`
     INSERT INTO sessions (user_id, token) VALUES (${userId}, ${token})
   `;
