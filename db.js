@@ -74,7 +74,7 @@ export async function insertUser(username, passwordHash) {
 
 export async function selectSessionByToken(token) {
   return sql`
-    SELECT * FROM sessions WHERE token = ${token}
+    SELECT * FROM sessions WHERE token = ${token} AND expiry_timestamp >= NOW()
   `;
 }
 
