@@ -1,8 +1,10 @@
 # Next.js Example
 
 - Next.js
+- Postgres.js
 - Jest
 - Cypress.io
+- GitHub Actions
 
 ## Database Setup
 
